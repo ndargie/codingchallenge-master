@@ -15,17 +15,17 @@ namespace ConstructionLine.CodingChallenge
 
     public SearchEngine(List<Shirt> shirts)
     {
-      _shirts = shirts;
+      
+      _shirts = shirts ?? new List<Shirt>();
       _lookup = _shirts.ToLookup(s => $"{s.Size.Name}-{s.Color.Name}");
-
-
       // TODO: data preparation and initialisation of additional data structures to improve performance goes here.
     }
 
     public SearchResults Search(SearchOptions options)
     {
-      var sizeComparisons = options.Sizes.Any() ? options.Sizes : Size.All;
-      var colorComparison = options.Colors.Any() ? options.Colors : Color.All;
+      var searchOptions = options ?? new SearchOptions();
+      var sizeComparisons = searchOptions.Sizes.Any() ? options.Sizes : Size.All;
+      var colorComparison = searchOptions.Colors.Any() ? options.Colors : Color.All;
       List<ColorCount> colorCounts = Color.All.Select(x => new ColorCount()
       {
         Color = x,
